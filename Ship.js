@@ -2,7 +2,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        
+        speed: 100,
     },
 
     onLoad(){
@@ -63,9 +63,16 @@ cc.Class({
         }
     },
 
-    update(delta){
+    update(dt){
         if(this.isMoving){
-            this.node.y +=1;
+            let angle = this.node.angle * 1/180 * Math.PI;
+            let dir = cc.v2(Math.sin(-angle), Math.cos(-angle)); 
+            dir.normalizeSelf();
+
+            this.node.x += dt * dir.x * this.speed;
+            this.node.y += dt * dir.y * this.speed;
+
+            console.log("dri: ", this.node.x, this.node.y);
         }
 
         if(this.isRotatingLeft && !this.isRotatingRight){
