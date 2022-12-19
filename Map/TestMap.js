@@ -1,6 +1,6 @@
 const COLLISION_TYPE = {
-    CIRCLE: 0,
-    SQUARES: 1,
+    SQUARES: 0,
+    CIRCLE: 1,
     POLYGON: 2
 };
 cc.Class({
@@ -37,10 +37,6 @@ cc.Class({
         const posX = -this._layerCollidable.node.width / 2;
         const posY = this._layerCollidable.node.height / 2;
         this._layerCollidable.node.setPosition(posX, posY);
-        
-    },
-
-    start(){
         this.createCollision();
     },
 
@@ -70,27 +66,30 @@ cc.Class({
         this._layerCollidable.node.addChild(nodeCollider);
         nodeCollider.setPosition(cc.v2(object.offset.x, -object.offset.y));
         RBcomp.type = 0;
+        // Change Object to Vector
+        for(let i = 0; i < listPoints.length; i++){
+            listPoints[i] = cc.v2(listPoints[i].x, listPoints[i].y);
+        }
         colliderComp.points = listPoints;
-        // colliderComp.apply();
-        colliderComp.apply(colliderComp.points, listPoints);
-        // colliderComp.apply(listPoints, colliderComp.points);
-
-        // const nodeColliderTest = cc.instantiate(this.colliderZonePrefab);
-        // const colliderCompTest = nodeCollider.addComponent(cc.PolygonCollider);
-        // this._layerCollidable.node.addChild(nodeColliderTest);
-        // nodeColliderTest.setPosition(cc.v2(object.offset.x, -object.offset.y));
-        // colliderCompTest.points = listPoints;
-
-        cc.error(colliderComp);
-
+        colliderComp.apply();
     },
 
     createSquaresCollider(object){
         cc.log("::Create Collider Squares::", object);
+        const width = object.width;
+        const height = object.height;
+        const nodeCollider = cc.instantiate(this.colliderZonePrefab);
+        const colliderComp = nodeCollider.addComponent(cc.PhysicsBoxCollider);
+        const RBcomp = nodeCollider.getComponent(cc.RigidBody);
+        this._layerCollidable.node.addChild(nodeCollider);
+        nodeCollider.setPosition(cc.v2(object.offset.x + width/2, - (object.offset.y + height / 2)));
+        colliderComp.size.width = width;
+        colliderComp.size.height = height;
+        RBcomp.type = 0;
+        colliderComp.apply();
     },
 
-    createCircleCollider(object){
-        cc.log("::Create Collider Circle::", object);
-    },
-
+    // createCircleCollider(object){
+       
+    // },
 });
