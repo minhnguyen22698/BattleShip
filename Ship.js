@@ -72,7 +72,7 @@ cc.Class({
             this.node.x += dt * dir.x * this.speed;
             this.node.y += dt * dir.y * this.speed;
 
-            console.log("dri: ", this.node.x, this.node.y);
+            // console.log("dri: ", this.node.x, this.node.y);
         }
 
         if(this.isRotatingLeft && !this.isRotatingRight){

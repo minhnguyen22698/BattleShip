@@ -45,7 +45,7 @@ cc.Class({
         for(let i = 0; i < listCollisions.length; i++){
             switch(listCollisions[i].type){
                 case COLLISION_TYPE.CIRCLE:
-                    this.createCircleCollider(listCollisions[i]);
+                    // this.createCircleCollider(listCollisions[i]);
                     break;
                 case COLLISION_TYPE.SQUARES:
                     this.createSquaresCollider(listCollisions[i]);
@@ -83,6 +83,7 @@ cc.Class({
         const RBcomp = nodeCollider.getComponent(cc.RigidBody);
         this._layerCollidable.node.addChild(nodeCollider);
         nodeCollider.setPosition(cc.v2(object.offset.x + width/2, - (object.offset.y + height / 2)));
+        nodeCollider.group = "ground";
         colliderComp.size.width = width;
         colliderComp.size.height = height;
         RBcomp.type = 0;
